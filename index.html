@@ -51,34 +51,63 @@
 
     <!-- Header Navbar -->
     <header class="bg-white border-b-4 border-indigo-200 shadow-sm sticky top-0 z-30">
-        <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchMode('menu')">
-                <div class="bg-indigo-500 text-white p-2.5 rounded-2xl shadow-md transform rotate-[-3deg]">
-                    <i class="fa-solid fa-spell-check text-2xl"></i>
+        <div class="max-w-4xl mx-auto px-4 py-2.5 flex flex-col sm:flex-row items-center justify-between gap-2">
+            <!-- Top Line: Logo/Title & Mobile Quick Tools -->
+            <div class="flex items-center justify-between w-full sm:w-auto">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchMode('menu')">
+                    <div class="bg-indigo-500 text-white p-2 rounded-2xl shadow-md transform rotate-[-3deg]">
+                        <i class="fa-solid fa-spell-check text-xl md:text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-game text-lg md:text-2xl text-indigo-600 leading-tight">Dictation Revision</h1>
+                        <p class="text-[10px] md:text-xs text-slate-400 font-semibold">Spelling & Sentence Practice</p>
+                    </div>
                 </div>
-                <div>
-                    <h1 class="font-game text-xl md:text-2xl text-indigo-600 leading-tight">Dictation Revision</h1>
-                    <p class="text-xs text-slate-400 font-semibold">Spelling & Sentence Practice</p>
+
+                <!-- Right Utility Icons on Mobile -->
+                <div class="flex sm:hidden items-center space-x-2">
+                    <div class="flex items-center bg-amber-100 border-2 border-amber-300 px-2 py-1 rounded-full shadow-inner">
+                        <i class="fa-solid fa-star text-amber-500 text-xs mr-1 animate-pulse"></i>
+                        <span id="starCountMobile" class="font-bold text-amber-800 text-xs">0</span>
+                    </div>
+                    <button onclick="toggleSpeed()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-1 rounded-full border border-slate-200 text-xs font-bold transition flex items-center" title="Toggle Speech Speed">
+                        <span class="speedIcon">🐢</span>
+                    </button>
+                    <button onclick="toggleSound()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 p-1.5 rounded-full border border-slate-200 transition">
+                        <i class="soundIcon fa-solid fa-volume-high text-xs"></i>
+                    </button>
                 </div>
             </div>
 
-            <div class="flex items-center space-x-2 md:space-x-3">
-                <!-- Stars Counter -->
-                <div class="flex items-center bg-amber-100 border-2 border-amber-300 px-2.5 py-1 md:px-3 md:py-1.5 rounded-full shadow-inner">
-                    <i class="fa-solid fa-star text-amber-500 text-base md:text-lg mr-1 animate-pulse"></i>
-                    <span id="starCount" class="font-bold text-amber-800 text-sm md:text-base">0</span>
+            <!-- Second Line on Mobile / Right Side on Desktop: Dictation Selector & Desktop Utilities -->
+            <div class="flex items-center justify-between w-full sm:w-auto space-x-2 pt-1.5 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+                <!-- Dictation Selector Dropdown (Placed on its own dedicated flex line on small screens) -->
+                <div class="relative flex-1 sm:flex-none flex items-center space-x-1.5">
+                    <span class="text-xs font-bold text-indigo-500 whitespace-nowrap"><i class="fa-solid fa-book-bookmark mr-1"></i>Scope:</span>
+                    <select id="headerDictationSelect" onchange="changeDictation(this.value)" class="w-full sm:w-auto bg-indigo-50 border-2 border-indigo-200 text-indigo-700 font-bold text-xs md:text-sm rounded-xl px-3 py-1.5 outline-none cursor-pointer hover:bg-indigo-100 transition shadow-sm">
+                        <!-- Dynamic Options -->
+                    </select>
                 </div>
-                
-                <!-- Speed Toggle Button -->
-                <button id="speedToggle" onclick="toggleSpeed()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1.5 rounded-full border-2 border-slate-200 text-xs font-bold transition flex items-center space-x-1" title="Toggle Speech Speed">
-                    <span id="speedIcon">🐢</span>
-                    <span id="speedLabel" class="hidden sm:inline">Slow (0.4x)</span>
-                </button>
 
-                <!-- Audio Toggle -->
-                <button id="soundToggle" onclick="toggleSound()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 p-2 md:p-2.5 rounded-full border-2 border-slate-200 transition">
-                    <i id="soundIcon" class="fa-solid fa-volume-high text-base md:text-lg"></i>
-                </button>
+                <!-- Desktop-only Utility Controls -->
+                <div class="hidden sm:flex items-center space-x-2">
+                    <!-- Stars Counter -->
+                    <div class="flex items-center bg-amber-100 border-2 border-amber-300 px-2.5 py-1 md:px-3 md:py-1.5 rounded-full shadow-inner">
+                        <i class="fa-solid fa-star text-amber-500 text-base md:text-lg mr-1 animate-pulse"></i>
+                        <span id="starCount" class="font-bold text-amber-800 text-sm md:text-base">0</span>
+                    </div>
+
+                    <!-- Speed Toggle Button -->
+                    <button id="speedToggle" onclick="toggleSpeed()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1.5 rounded-full border-2 border-slate-200 text-xs font-bold transition flex items-center space-x-1" title="Toggle Speech Speed">
+                        <span class="speedIcon">🐢</span>
+                        <span id="speedLabel" class="hidden md:inline">Slow (0.4x)</span>
+                    </button>
+
+                    <!-- Audio Toggle -->
+                    <button id="soundToggle" onclick="toggleSound()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 p-2 md:p-2.5 rounded-full border-2 border-slate-200 transition">
+                        <i id="soundIcon" class="soundIcon fa-solid fa-volume-high text-base md:text-lg"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
@@ -86,27 +115,26 @@
     <main class="flex-1 max-w-4xl w-full mx-auto p-4 flex flex-col justify-center">
 
         <!-- Main Menu Screen -->
-        <div id="menuScreen" class="space-y-6 max-w-lg mx-auto w-full py-4">
+        <div id="menuScreen" class="space-y-6 max-w-2xl mx-auto w-full py-4">
             <div class="text-center space-y-2">
                 <span class="bg-indigo-100 text-indigo-700 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Dictation Revision</span>
-                <h2 class="font-game text-3xl md:text-4xl text-slate-800">Ready for a Challenge?</h2>
-                <p class="text-slate-500 font-medium">Master 12 vocabulary words & sentence practice</p>
+                <h2 id="dictationTitleDisplay" class="font-game text-3xl md:text-4xl text-slate-800">Dictation 1</h2>
+                <p id="dictationSubtitleDisplay" class="text-slate-500 font-medium">Master vocabulary & sentence practice</p>
+            </div>
+
+            <!-- Dictation Selection Bar -->
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 space-y-2">
+                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider">Select Dictation Scope (選擇默書範圍)</label>
+                <div id="dictationTabs" class="flex flex-wrap gap-2">
+                    <!-- Dynamic tabs rendered here -->
+                </div>
             </div>
 
             <!-- Mode Buttons -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                <button onclick="startGame('scramble')" class="pop-btn bg-gradient-to-b from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white p-5 rounded-2xl shadow-lg border-b-4 border-indigo-800 text-left flex flex-col justify-between h-36 relative overflow-hidden group">
-                    <div class="z-10">
-                        <span class="bg-indigo-400/40 text-white text-xs px-2.5 py-1 rounded-md font-bold">POPULAR</span>
-                        <h3 class="font-game text-xl mt-2">Spelling Blocks</h3>
-                        <p class="text-indigo-100 text-xs">Unscramble letters to spell words</p>
-                    </div>
-                    <i class="fa-solid fa-cubes text-5xl absolute right-2 bottom-2 text-indigo-400/30 group-hover:scale-110 transition"></i>
-                </button>
-
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
                 <button onclick="startGame('listen')" class="pop-btn bg-gradient-to-b from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white p-5 rounded-2xl shadow-lg border-b-4 border-emerald-800 text-left flex flex-col justify-between h-36 relative overflow-hidden group">
                     <div class="z-10">
-                        <span class="bg-emerald-400/40 text-white text-xs px-2.5 py-1 rounded-md font-bold">AUDIO</span>
+                        <span class="bg-emerald-400/40 text-white text-xs px-2.5 py-1 rounded-md font-bold">PART A</span>
                         <h3 class="font-game text-xl mt-2">Listen & Spell</h3>
                         <p class="text-emerald-100 text-xs">Listen closely and spell the word</p>
                     </div>
@@ -115,8 +143,8 @@
 
                 <button onclick="startGame('fill')" class="pop-btn bg-gradient-to-b from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white p-5 rounded-2xl shadow-lg border-b-4 border-purple-800 text-left flex flex-col justify-between h-36 relative overflow-hidden group">
                     <div class="z-10">
-                        <span class="bg-purple-400/40 text-white text-xs px-2.5 py-1 rounded-md font-bold">NEW</span>
-                        <h3 class="font-game text-xl mt-2">Fill in the Blanks</h3>
+                        <span class="bg-purple-400/40 text-white text-xs px-2.5 py-1 rounded-md font-bold">PART B</span>
+                        <h3 class="font-game text-xl mt-2">Fill in Blanks</h3>
                         <p class="text-purple-100 text-xs">Complete sentences & dialogues</p>
                     </div>
                     <i class="fa-solid fa-pen-to-square text-5xl absolute right-2 bottom-2 text-purple-400/30 group-hover:scale-110 transition"></i>
@@ -125,10 +153,10 @@
                 <button onclick="startGame('flashcard')" class="pop-btn bg-gradient-to-b from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white p-5 rounded-2xl shadow-lg border-b-4 border-amber-800 text-left flex flex-col justify-between h-36 relative overflow-hidden group">
                     <div class="z-10">
                         <span class="bg-amber-400/40 text-white text-xs px-2.5 py-1 rounded-md font-bold">REVIEW</span>
-                        <h3 class="font-game text-xl mt-1">Flashcards</h3>
+                        <h3 class="font-game text-xl mt-2">Flashcards</h3>
                         <p class="text-amber-100 text-xs">Practice words with audio pronunciation</p>
                     </div>
-                    <i class="fa-solid fa-id-card text-5xl absolute right-4 bottom-2 text-amber-400/30 group-hover:scale-110 transition"></i>
+                    <i class="fa-solid fa-id-card text-5xl absolute right-2 bottom-2 text-amber-400/30 group-hover:scale-110 transition"></i>
                 </button>
             </div>
 
@@ -136,9 +164,9 @@
             <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
                 <div class="flex items-center justify-between mb-3">
                     <h4 class="font-bold text-slate-700 text-sm flex items-center">
-                        <i class="fa-solid fa-book-open text-indigo-500 mr-2"></i> Word Collection (12)
+                        <i class="fa-solid fa-book-open text-indigo-500 mr-2"></i> Part A: Word Collection (<span id="partAWordCount">0</span>)
                     </h4>
-                    <span id="completionBadge" class="text-xs bg-slate-100 text-slate-600 font-bold px-2.5 py-1 rounded-full">Mastered 0/12</span>
+                    <span id="completionBadge" class="text-xs bg-slate-100 text-slate-600 font-bold px-2.5 py-1 rounded-full">Mastered 0/0</span>
                 </div>
                 <div id="wordPillList" class="flex flex-wrap gap-1.5">
                     <!-- Dynamic word pills will be rendered here -->
@@ -146,7 +174,7 @@
             </div>
         </div>
 
-        <!-- Gameplay Screen (Scramble & Listen Modes) -->
+        <!-- Gameplay Screen (Listen Mode) -->
         <div id="gameScreen" class="hidden space-y-4 max-w-xl mx-auto w-full">
             
             <!-- Top Progress & Controls -->
@@ -330,124 +358,134 @@
     </main>
 
     <script>
-        // --- Word Database ---
-        const WORDS_DATA = [
-            { id: 1, word: "father", category: "Family Member", icon: "👨" },
-            { id: 2, word: "mother", category: "Family Member", icon: "👩" },
-            { id: 3, word: "brother", category: "Family Member", icon: "👦" },
-            { id: 4, word: "sister", category: "Family Member", icon: "👧" },
-            { id: 5, word: "five", category: "Number", icon: "5️⃣" },
-            { id: 6, word: "seven", category: "Number", icon: "7️⃣" },
-            { id: 7, word: "a friend", category: "Person", icon: "🧑‍🤝‍🧑" },
-            { id: 8, word: "a group leader", category: "Role", icon: "🧑‍💼" },
-            { id: 9, word: "a classmate", category: "Person", icon: "🎒" },
-            { id: 10, word: "a classroom", category: "Place", icon: "🏫" },
-            { id: 11, word: "a school", category: "Place", icon: "🏢" },
-            { id: 12, word: "this", category: "Pronoun", icon: "👉" }
-        ];
+        // --- Sound Effects Utility (Web Audio API) ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playSound(type) {
+            if (isSoundMuted || !audioCtx) return;
+            if (audioCtx.state === 'suspended') audioCtx.resume();
 
-        // --- Fill in the Blank Sentences Database (Strict Dictation Scope) ---
-        const FILL_IN_DATA = [
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'click') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(400, now);
+                osc.frequency.exponentialRampToValueAtTime(800, now + 0.08);
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+                osc.start(now);
+                osc.stop(now + 0.08);
+            } else if (type === 'correct') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(523.25, now); // C5
+                osc.frequency.setValueAtTime(659.25, now + 0.1); // E5
+                osc.frequency.setValueAtTime(783.99, now + 0.2); // G5
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+                osc.start(now);
+                osc.stop(now + 0.35);
+            } else if (type === 'wrong') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(200, now);
+                osc.frequency.exponentialRampToValueAtTime(100, now + 0.25);
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                osc.start(now);
+                osc.stop(now + 0.25);
+            } else if (type === 'fanfare') {
+                const notes = [523.25, 659.25, 783.99, 1046.50];
+                notes.forEach((freq, idx) => {
+                    const noteOsc = audioCtx.createOscillator();
+                    const noteGain = audioCtx.createGain();
+                    noteOsc.connect(noteGain);
+                    noteGain.connect(audioCtx.destination);
+                    noteOsc.type = 'triangle';
+                    noteOsc.frequency.setValueAtTime(freq, now + idx * 0.12);
+                    noteGain.gain.setValueAtTime(0.2, now + idx * 0.12);
+                    noteGain.gain.exponentialRampToValueAtTime(0.01, now + idx * 0.12 + 0.25);
+                    noteOsc.start(now + idx * 0.12);
+                    noteOsc.stop(now + idx * 0.12 + 0.25);
+                });
+            }
+        }
+
+        // --- Multi-Dictation Database ---
+        const DICTATIONS = [
             {
                 id: 1,
-                context: "Dictation Sentence: Twins",
-                displayParts: ["Mandy and I are ", "."],
-                answer: "twins",
-                fullText: "Mandy and I are twins.",
-                icon: "👯‍♀️"
+                name: "默書 (一) Dictation 1",
+                title: "Dictation 1 Scope",
+                subtitle: "Part A Vocabulary & Part B Sentences",
+                words: [
+                    { id: 1, word: "father", category: "Family Member", icon: "👨" },
+                    { id: 2, word: "mother", category: "Family Member", icon: "👩" },
+                    { id: 3, word: "brother", category: "Family Member", icon: "👦" },
+                    { id: 4, word: "sister", category: "Family Member", icon: "👧" },
+                    { id: 5, word: "five", category: "Number", icon: "5️⃣" },
+                    { id: 6, word: "seven", category: "Number", icon: "7️⃣" },
+                    { id: 7, word: "a friend", category: "Person", icon: "🧑‍🤝‍🧑" },
+                    { id: 8, word: "a group leader", category: "Role", icon: "🧑‍💼" },
+                    { id: 9, word: "a classmate", category: "Person", icon: "🎒" },
+                    { id: 10, word: "a classroom", category: "Place", icon: "🏫" },
+                    { id: 11, word: "a school", category: "Place", icon: "🏢" },
+                    { id: 12, word: "this", category: "Pronoun", icon: "👉" }
+                ],
+                sentences: [
+                    { id: 1, context: "Dictation Sentence: Twins", displayParts: ["Mandy and I are ", "."], answer: "twins", fullText: "Mandy and I are twins.", icon: "👯‍♀️" },
+                    { id: 2, context: "Dictation Sentence: Age Statement", displayParts: ["We are ", " years old."], answer: "seven", fullText: "We are seven years old.", icon: "7️⃣" },
+                    { id: 3, context: "Dictation Sentence: Age Statement", displayParts: ["We are seven ", " old."], answer: "years", fullText: "We are seven years old.", icon: "🎂" },
+                    { id: 4, context: "Dictation Sentence: Age Question", displayParts: ["How ", " are you, Emily?"], answer: "old", fullText: "How old are you, Emily?", icon: "❓" },
+                    { id: 5, context: "Dictation Sentence: Name in Question", displayParts: ["How old are you, ", "?"], answer: "Emily", fullText: "How old are you, Emily?", icon: "👧" },
+                    { id: 6, context: "Dictation Sentence: Age Reply", displayParts: ["I am ", " years old."], answer: "six", fullText: "I am six years old.", icon: "6️⃣" },
+                    { id: 7, context: "Dictation Sentence: Age Reply", displayParts: ["I am six ", " old."], answer: "years", fullText: "I am six years old.", icon: "🎂" },
+                    { id: 8, context: "Dictation Sentence: Offering Snack", displayParts: ["", " is a cookie for you."], answer: "Here", fullText: "Here is a cookie for you.", icon: "🍪" },
+                    { id: 9, context: "Dictation Sentence: Offering Snack", displayParts: ["Here is a ", " for you."], answer: "cookie", fullText: "Here is a cookie for you.", icon: "🍪" },
+                    { id: 10, context: "Dictation Sentence: Offering Snack", displayParts: ["Here is a cookie for ", "."], answer: "you", fullText: "Here is a cookie for you.", icon: "👉" },
+                    { id: 11, context: "Dictation Sentence: Expressing Thanks", displayParts: ["", " you."], answer: "Thank", fullText: "Thank you.", icon: "🙏" },
+                    { id: 12, context: "Dictation Sentence: Expressing Thanks", displayParts: ["Thank ", "."], answer: "you", fullText: "Thank you.", icon: "😊" }
+                ]
             },
             {
                 id: 2,
-                context: "Dictation Sentence: Age Statement",
-                displayParts: ["We are ", " years old."],
-                answer: "seven",
-                fullText: "We are seven years old.",
-                icon: "7️⃣"
-            },
-            {
-                id: 3,
-                context: "Dictation Sentence: Age Statement",
-                displayParts: ["We are seven ", " old."],
-                answer: "years",
-                fullText: "We are seven years old.",
-                icon: "🎂"
-            },
-            {
-                id: 4,
-                context: "Dictation Sentence: Age Question",
-                displayParts: ["How ", " are you, Emily?"],
-                answer: "old",
-                fullText: "How old are you, Emily?",
-                icon: "❓"
-            },
-            {
-                id: 5,
-                context: "Dictation Sentence: Name in Question",
-                displayParts: ["How old are you, ", "?"],
-                answer: "Emily",
-                fullText: "How old are you, Emily?",
-                icon: "👧"
-            },
-            {
-                id: 6,
-                context: "Dictation Sentence: Age Reply",
-                displayParts: ["I am ", " years old."],
-                answer: "six",
-                fullText: "I am six years old.",
-                icon: "6️⃣"
-            },
-            {
-                id: 7,
-                context: "Dictation Sentence: Age Reply",
-                displayParts: ["I am six ", " old."],
-                answer: "years",
-                fullText: "I am six years old.",
-                icon: "🎂"
-            },
-            {
-                id: 8,
-                context: "Dictation Sentence: Offering Snack",
-                displayParts: ["", " is a cookie for you."],
-                answer: "Here",
-                fullText: "Here is a cookie for you.",
-                icon: "🍪"
-            },
-            {
-                id: 9,
-                context: "Dictation Sentence: Offering Snack",
-                displayParts: ["Here is a ", " for you."],
-                answer: "cookie",
-                fullText: "Here is a cookie for you.",
-                icon: "🍪"
-            },
-            {
-                id: 10,
-                context: "Dictation Sentence: Offering Snack",
-                displayParts: ["Here is a cookie for ", "."],
-                answer: "you",
-                fullText: "Here is a cookie for you.",
-                icon: "👉"
-            },
-            {
-                id: 11,
-                context: "Dictation Sentence: Expressing Thanks",
-                displayParts: ["", " you."],
-                answer: "Thank",
-                fullText: "Thank you.",
-                icon: "🙏"
-            },
-            {
-                id: 12,
-                context: "Dictation Sentence: Expressing Thanks",
-                displayParts: ["Thank ", "."],
-                answer: "you",
-                fullText: "Thank you.",
-                icon: "😊"
+                name: "默書 (二) Dictation 2 (Sample)",
+                title: "Dictation 2 Scope",
+                subtitle: "Part A School Objects & Part B Requests",
+                words: [
+                    { id: 1, word: "pencil", category: "Stationery", icon: "✏" },
+                    { id: 2, word: "ruler", category: "Stationery", icon: "📏" },
+                    { id: 3, word: "eraser", category: "Stationery", icon: "🧹" },
+                    { id: 4, word: "schoolbag", category: "Object", icon: "🎒" },
+                    { id: 5, word: "teacher", category: "Person", icon: "👩‍🏫" },
+                    { id: 6, word: "student", category: "Person", icon: "🧑‍🎓" }
+                ],
+                sentences: [
+                    { id: 1, context: "Polite Request", displayParts: ["May I have a ", " please?"], answer: "ruler", fullText: "May I have a ruler please?", icon: "📏" },
+                    { id: 2, context: "Polite Request Reply", displayParts: ["Here you ", "."], answer: "are", fullText: "Here you are.", icon: "🎁" }
+                ]
             }
         ];
 
+        // --- Active Dictation State ---
+        let currentDictationId = 1;
+
+        function getActiveDictation() {
+            return DICTATIONS.find(d => d.id == currentDictationId) || DICTATIONS[0];
+        }
+
+        function getActiveWords() {
+            return getActiveDictation().words;
+        }
+
+        function getActiveSentences() {
+            return getActiveDictation().sentences;
+        }
+
         // --- App State ---
-        let currentMode = 'menu'; // 'menu', 'scramble', 'listen', 'flashcard', 'fill'
+        let currentMode = 'menu'; // 'menu', 'listen', 'flashcard', 'fill'
         let currentWordIndex = 0;
         let gameWordsList = [];
         let userSelectedLetters = []; // Array of objects { char, poolId }
@@ -467,58 +505,42 @@
         let currentFillPoolLetters = [];
         let isFillLocked = false;
 
-        function playSound(type) {
-            if (isSoundMuted) return;
-            try {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.connect(gain);
-                gain.connect(ctx.destination);
+        function changeDictation(id) {
+            playSound('click');
+            currentDictationId = parseInt(id);
+            renderDictationUI();
+        }
 
-                const now = ctx.currentTime;
-                if (type === 'click') {
-                    osc.frequency.setValueAtTime(400, now);
-                    osc.frequency.exponentialRampToValueAtTime(200, now + 0.05);
-                    gain.gain.setValueAtTime(0.2, now);
-                    gain.gain.linearRampToValueAtTime(0.01, now + 0.05);
-                    osc.start(now);
-                    osc.stop(now + 0.05);
-                } else if (type === 'correct') {
-                    osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(523.25, now);
-                    osc.frequency.setValueAtTime(659.25, now + 0.1);
-                    osc.frequency.setValueAtTime(783.99, now + 0.2);
-                    gain.gain.setValueAtTime(0.3, now);
-                    gain.gain.linearRampToValueAtTime(0.01, now + 0.35);
-                    osc.start(now);
-                    osc.stop(now + 0.35);
-                } else if (type === 'wrong') {
-                    osc.type = 'sawtooth';
-                    osc.frequency.setValueAtTime(220, now);
-                    osc.frequency.linearRampToValueAtTime(140, now + 0.25);
-                    gain.gain.setValueAtTime(0.3, now);
-                    gain.gain.linearRampToValueAtTime(0.01, now + 0.25);
-                    osc.start(now);
-                    osc.stop(now + 0.25);
-                } else if (type === 'fanfare') {
-                    const notes = [523.25, 659.25, 783.99, 1046.50];
-                    notes.forEach((freq, idx) => {
-                        const subOsc = ctx.createOscillator();
-                        const subGain = ctx.createGain();
-                        subOsc.type = 'triangle';
-                        subOsc.frequency.setValueAtTime(freq, now + idx * 0.12);
-                        subGain.gain.setValueAtTime(0.3, now + idx * 0.12);
-                        subGain.gain.linearRampToValueAtTime(0.01, now + idx * 0.12 + 0.25);
-                        subOsc.connect(subGain);
-                        subGain.connect(ctx.destination);
-                        subOsc.start(now + idx * 0.12);
-                        subOsc.stop(now + idx * 0.12 + 0.25);
-                    });
-                }
-            } catch(e) {
-                console.log("Audio Error:", e);
-            }
+        function renderDictationUI() {
+            const active = getActiveDictation();
+
+            // Update main menu header/subtitle
+            document.getElementById('dictationTitleDisplay').innerText = active.title;
+            document.getElementById('dictationSubtitleDisplay').innerText = active.subtitle;
+
+            // Render Select Options in Header
+            const headerSelect = document.getElementById('headerDictationSelect');
+            headerSelect.innerHTML = DICTATIONS.map(d => 
+                `<option value="${d.id}" ${d.id === currentDictationId ? 'selected' : ''}>${d.name}</option>`
+            ).join('');
+
+            // Render Tabs in Main Menu
+            const tabsContainer = document.getElementById('dictationTabs');
+            tabsContainer.innerHTML = DICTATIONS.map(d => `
+                <button onclick="changeDictation(${d.id})" class="pop-btn px-4 py-2 rounded-xl text-xs md:text-sm font-bold transition flex items-center space-x-1.5 ${
+                    d.id === currentDictationId 
+                        ? 'bg-indigo-600 text-white shadow-md' 
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                }">
+                    <i class="fa-solid ${d.id === currentDictationId ? 'fa-circle-check' : 'fa-circle'} text-xs"></i>
+                    <span>${d.name}</span>
+                </button>
+            `).join('');
+
+            // Update word pills & count
+            document.getElementById('partAWordCount').innerText = active.words.length;
+            document.getElementById('completionBadge').innerText = `Mastered 0/${active.words.length}`;
+            renderWordPillList();
         }
 
         function speakText(text) {
@@ -533,29 +555,35 @@
         function toggleSpeed() {
             if (speechRate === 0.4) {
                 speechRate = 0.9;
-                document.getElementById('speedIcon').innerText = '⚡';
-                document.getElementById('speedLabel').innerText = 'Normal (0.9x)';
+                document.querySelectorAll('.speedIcon').forEach(el => el.innerText = '⚡');
+                const label = document.getElementById('speedLabel');
+                if (label) label.innerText = 'Normal (0.9x)';
             } else {
                 speechRate = 0.4;
-                document.getElementById('speedIcon').innerText = '🐢';
-                document.getElementById('speedLabel').innerText = 'Slow (0.4x)';
+                document.querySelectorAll('.speedIcon').forEach(el => el.innerText = '🐢');
+                const label = document.getElementById('speedLabel');
+                if (label) label.innerText = 'Slow (0.4x)';
             }
             playSound('click');
         }
 
         function toggleSound() {
             isSoundMuted = !isSoundMuted;
-            const soundIcon = document.getElementById('soundIcon');
-            if (isSoundMuted) {
-                soundIcon.className = 'fa-solid fa-volume-xmark text-base md:text-lg text-slate-400';
-            } else {
-                soundIcon.className = 'fa-solid fa-volume-high text-base md:text-lg text-slate-600';
-                playSound('click');
-            }
+            document.querySelectorAll('.soundIcon').forEach(soundIcon => {
+                if (isSoundMuted) {
+                    soundIcon.className = 'soundIcon fa-solid fa-volume-xmark text-slate-400';
+                } else {
+                    soundIcon.className = 'soundIcon fa-solid fa-volume-high text-slate-600';
+                }
+            });
+            if (!isSoundMuted) playSound('click');
         }
 
         function updateStarDisplay() {
-            document.getElementById('starCount').innerText = stars;
+            const el1 = document.getElementById('starCount');
+            if (el1) el1.innerText = stars;
+            const el2 = document.getElementById('starCountMobile');
+            if (el2) el2.innerText = stars;
         }
 
         function switchMode(mode) {
@@ -570,7 +598,7 @@
 
             if (mode === 'menu') {
                 document.getElementById('menuScreen').classList.remove('hidden');
-            } else if (mode === 'scramble' || mode === 'listen') {
+            } else if (mode === 'listen') {
                 document.getElementById('gameScreen').classList.remove('hidden');
             } else if (mode === 'fill') {
                 document.getElementById('fillScreen').classList.remove('hidden');
@@ -586,12 +614,12 @@
             correctAnswersCount = 0;
 
             if (mode === 'fill') {
-                fillQuestionsList = [...FILL_IN_DATA].sort(() => Math.random() - 0.5);
+                fillQuestionsList = [...getActiveSentences()].sort(() => Math.random() - 0.5);
                 currentFillIndex = 0;
                 switchMode('fill');
                 loadFillQuestion();
             } else {
-                gameWordsList = [...WORDS_DATA].sort(() => Math.random() - 0.5);
+                gameWordsList = [...getActiveWords()].sort(() => Math.random() - 0.5);
                 currentWordIndex = 0;
                 switchMode(mode);
                 loadQuestion();
@@ -599,7 +627,7 @@
         }
 
         function getCurrentWordObj() {
-            return gameWordsList[currentWordIndex] || WORDS_DATA[0];
+            return gameWordsList[currentWordIndex] || getActiveWords()[0];
         }
 
         function loadQuestion() {
@@ -615,34 +643,46 @@
             const categoryEl = document.getElementById('wordTranslation');
 
             categoryEl.innerText = currentWord.category;
+            iconEl.innerText = '❓';
 
-            if (currentMode === 'listen') {
-                iconEl.innerText = '❓';
-            } else {
-                iconEl.innerText = currentWord.icon;
-            }
-
-            // Build letter pool with distractors
-            const rawWord = currentWord.word;
-            let poolChars = rawWord.split('').map((char, idx) => ({
-                id: idx + '_' + Math.random(),
-                char: char,
-                used: false
-            }));
-
+            // Build letter pool containing all 26 letters (A-Z) plus any additional duplicates required
+            const rawWord = currentWord.word.toLowerCase();
             const alphabet = "abcdefghijklmnopqrstuvwxyz";
-            const minPoolSize = Math.max(rawWord.length + 2, 8);
-            let extraCounter = 100;
-            while (poolChars.length < minPoolSize) {
-                const randChar = alphabet[Math.floor(Math.random() * alphabet.length)];
-                poolChars.push({
-                    id: 'extra_' + (extraCounter++),
-                    char: randChar,
-                    used: false
-                });
+            
+            let charCounts = {};
+            for (let char of rawWord) {
+                charCounts[char] = (charCounts[char] || 0) + 1;
             }
 
-            currentPoolLetters = poolChars.sort(() => Math.random() - 0.5);
+            let poolChars = [];
+            let counter = 0;
+
+            for (let char of alphabet) {
+                const needed = Math.max(1, charCounts[char] || 0);
+                for (let i = 0; i < needed; i++) {
+                    poolChars.push({
+                        id: 'listen_' + char + '_' + i + '_' + (counter++),
+                        char: char,
+                        used: false
+                    });
+                }
+            }
+
+            if (charCounts[' ']) {
+                for (let i = 0; i < charCounts[' ']; i++) {
+                    poolChars.push({
+                        id: 'listen_space_' + i + '_' + (counter++),
+                        char: ' ',
+                        used: false
+                    });
+                }
+            }
+
+            currentPoolLetters = poolChars.sort((a, b) => {
+                if (a.char === ' ') return 1;
+                if (b.char === ' ') return -1;
+                return a.char.localeCompare(b.char);
+            });
 
             renderAnswerSlots();
             renderPoolLetters();
@@ -699,7 +739,7 @@
                 const isSpace = item.char === ' ';
                 const btn = document.createElement('button');
                 
-                btn.className = `pop-btn w-11 h-12 md:w-13 md:h-14 rounded-2xl font-game text-xl md:text-2xl flex items-center justify-center transition ${
+                btn.className = `pop-btn w-8 h-10 sm:w-10 sm:h-12 md:w-11 md:h-12 rounded-xl sm:rounded-2xl font-game text-base sm:text-xl md:text-2xl flex items-center justify-center transition ${
                     item.used 
                         ? 'opacity-20 cursor-not-allowed bg-slate-200 text-slate-400 border-b-0' 
                         : isSpace 
@@ -857,26 +897,43 @@
             }
 
             // Build letter pool for target word in blank
-            const targetWord = q.answer;
-            let poolChars = targetWord.split('').map((char, idx) => ({
-                id: 'fill_' + idx + '_' + Math.random(),
-                char: char,
-                used: false
-            }));
-
+            const targetWord = q.answer.toLowerCase();
             const alphabet = "abcdefghijklmnopqrstuvwxyz";
-            const minPoolSize = Math.max(targetWord.length + 2, 7);
-            let extraCounter = 200;
-            while (poolChars.length < minPoolSize) {
-                const randChar = alphabet[Math.floor(Math.random() * alphabet.length)];
-                poolChars.push({
-                    id: 'fill_extra_' + (extraCounter++),
-                    char: randChar,
-                    used: false
-                });
+
+            let charCounts = {};
+            for (let char of targetWord) {
+                charCounts[char] = (charCounts[char] || 0) + 1;
             }
 
-            currentFillPoolLetters = poolChars.sort(() => Math.random() - 0.5);
+            let poolChars = [];
+            let counter = 0;
+
+            for (let char of alphabet) {
+                const needed = Math.max(1, charCounts[char] || 0);
+                for (let i = 0; i < needed; i++) {
+                    poolChars.push({
+                        id: 'fill_' + char + '_' + i + '_' + (counter++),
+                        char: char,
+                        used: false
+                    });
+                }
+            }
+
+            if (charCounts[' ']) {
+                for (let i = 0; i < charCounts[' ']; i++) {
+                    poolChars.push({
+                        id: 'fill_space_' + i + '_' + (counter++),
+                        char: ' ',
+                        used: false
+                    });
+                }
+            }
+
+            currentFillPoolLetters = poolChars.sort((a, b) => {
+                if (a.char === ' ') return 1;
+                if (b.char === ' ') return -1;
+                return a.char.localeCompare(b.char);
+            });
 
             renderFillSentenceDisplay();
             renderFillAnswerSlots();
@@ -941,7 +998,7 @@
                 const isSpace = item.char === ' ';
                 const btn = document.createElement('button');
                 
-                btn.className = `pop-btn w-11 h-12 md:w-13 md:h-14 rounded-2xl font-game text-xl md:text-2xl flex items-center justify-center transition ${
+                btn.className = `pop-btn w-8 h-10 sm:w-10 sm:h-12 md:w-11 md:h-12 rounded-xl sm:rounded-2xl font-game text-base sm:text-xl md:text-2xl flex items-center justify-center transition ${
                     item.used 
                         ? 'opacity-20 cursor-not-allowed bg-slate-200 text-slate-400 border-b-0' 
                         : isSpace 
@@ -1108,27 +1165,31 @@
         }
 
         function renderFlashcard() {
-            const item = WORDS_DATA[currentFlashcardIdx];
-            document.getElementById('flashcardIndex').innerText = `${currentFlashcardIdx + 1} / ${WORDS_DATA.length}`;
+            const words = getActiveWords();
+            const item = words[currentFlashcardIdx] || words[0];
+            document.getElementById('flashcardIndex').innerText = `${currentFlashcardIdx + 1} / ${words.length}`;
             document.getElementById('fcIcon').innerText = item.icon;
             document.getElementById('fcEnglish').innerText = item.word;
             document.getElementById('fcCategory').innerText = item.category;
         }
 
         function playFlashcardAudio() {
-            const item = WORDS_DATA[currentFlashcardIdx];
+            const words = getActiveWords();
+            const item = words[currentFlashcardIdx] || words[0];
             speakText(item.word);
         }
 
         function nextFlashcard() {
             playSound('click');
-            currentFlashcardIdx = (currentFlashcardIdx + 1) % WORDS_DATA.length;
+            const words = getActiveWords();
+            currentFlashcardIdx = (currentFlashcardIdx + 1) % words.length;
             renderFlashcard();
         }
 
         function prevFlashcard() {
             playSound('click');
-            currentFlashcardIdx = (currentFlashcardIdx - 1 + WORDS_DATA.length) % WORDS_DATA.length;
+            const words = getActiveWords();
+            currentFlashcardIdx = (currentFlashcardIdx - 1 + words.length) % words.length;
             renderFlashcard();
         }
 
@@ -1145,7 +1206,8 @@
             const accuracy = Math.round((correctAnswersCount / Math.max(totalAttempts, 1)) * 100) || 100;
             document.getElementById('accuracyRate').innerText = `${accuracy}%`;
 
-            document.getElementById('completionBadge').innerText = `Mastered 12/12 🎉`;
+            const active = getActiveDictation();
+            document.getElementById('completionBadge').innerText = `Mastered ${active.words.length}/${active.words.length} 🎉`;
             document.getElementById('completionBadge').className = 'text-xs bg-emerald-100 text-emerald-700 font-bold px-2.5 py-1 rounded-full';
 
             document.getElementById('resultModal').classList.remove('hidden');
@@ -1155,7 +1217,7 @@
             const container = document.getElementById('wordPillList');
             if (!container) return;
             container.innerHTML = '';
-            WORDS_DATA.forEach((item) => {
+            getActiveWords().forEach((item) => {
                 const pill = document.createElement('span');
                 pill.className = 'bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-600 border border-slate-200 px-2.5 py-1 rounded-xl text-xs font-semibold cursor-pointer transition flex items-center space-x-1';
                 pill.innerHTML = `<span class="mr-1">${item.icon}</span> <span>${item.word}</span>`;
@@ -1168,7 +1230,7 @@
         window.addEventListener('keydown', (e) => {
             const key = e.key.toLowerCase();
 
-            if (currentMode === 'scramble' || currentMode === 'listen') {
+            if (currentMode === 'listen') {
                 if (key === 'backspace') {
                     if (userSelectedLetters.length > 0) {
                         removeSelectedLetter(userSelectedLetters.length - 1);
@@ -1194,7 +1256,7 @@
         });
 
         window.onload = function() {
-            renderWordPillList();
+            renderDictationUI();
             updateStarDisplay();
         };
     </script>
