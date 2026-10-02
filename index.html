@@ -62,16 +62,22 @@
                 </div>
             </div>
 
-            <div class="flex items-center space-x-3">
+            <div class="flex items-center space-x-2 md:space-x-3">
                 <!-- Stars Counter -->
-                <div class="flex items-center bg-amber-100 border-2 border-amber-300 px-3 py-1.5 rounded-full shadow-inner">
-                    <i class="fa-solid fa-star text-amber-500 text-lg mr-1.5 animate-pulse"></i>
-                    <span id="starCount" class="font-bold text-amber-800 text-base">0</span>
+                <div class="flex items-center bg-amber-100 border-2 border-amber-300 px-2.5 py-1 md:px-3 md:py-1.5 rounded-full shadow-inner">
+                    <i class="fa-solid fa-star text-amber-500 text-base md:text-lg mr-1 animate-pulse"></i>
+                    <span id="starCount" class="font-bold text-amber-800 text-sm md:text-base">0</span>
                 </div>
                 
+                <!-- Speed Toggle Button -->
+                <button id="speedToggle" onclick="toggleSpeed()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1.5 rounded-full border-2 border-slate-200 text-xs font-bold transition flex items-center space-x-1" title="Toggle Speech Speed">
+                    <span id="speedIcon">🐢</span>
+                    <span id="speedLabel" class="hidden sm:inline">Slow (0.4x)</span>
+                </button>
+
                 <!-- Audio Toggle -->
-                <button id="soundToggle" onclick="toggleSound()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 p-2.5 rounded-full border-2 border-slate-200 transition">
-                    <i id="soundIcon" class="fa-solid fa-volume-high text-lg"></i>
+                <button id="soundToggle" onclick="toggleSound()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 p-2 md:p-2.5 rounded-full border-2 border-slate-200 transition">
+                    <i id="soundIcon" class="fa-solid fa-volume-high text-base md:text-lg"></i>
                 </button>
             </div>
         </div>
@@ -451,6 +457,7 @@
         let totalAttempts = 0;
         let correctAnswersCount = 0;
         let isSoundMuted = false;
+        let speechRate = 0.4; // Slower rate default (0.4x) for ultra-clear dictation
         let currentFlashcardIdx = 0;
         
         // Fill mode state
@@ -519,17 +526,30 @@
             window.speechSynthesis.cancel();
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = 'en-US';
-            utterance.rate = 0.85;
+            utterance.rate = speechRate; // Dynamic rate (0.4x slow or 0.9x normal)
             window.speechSynthesis.speak(utterance);
+        }
+
+        function toggleSpeed() {
+            if (speechRate === 0.4) {
+                speechRate = 0.9;
+                document.getElementById('speedIcon').innerText = '⚡';
+                document.getElementById('speedLabel').innerText = 'Normal (0.9x)';
+            } else {
+                speechRate = 0.4;
+                document.getElementById('speedIcon').innerText = '🐢';
+                document.getElementById('speedLabel').innerText = 'Slow (0.4x)';
+            }
+            playSound('click');
         }
 
         function toggleSound() {
             isSoundMuted = !isSoundMuted;
             const soundIcon = document.getElementById('soundIcon');
             if (isSoundMuted) {
-                soundIcon.className = 'fa-solid fa-volume-xmark text-lg text-slate-400';
+                soundIcon.className = 'fa-solid fa-volume-xmark text-base md:text-lg text-slate-400';
             } else {
-                soundIcon.className = 'fa-solid fa-volume-high text-lg text-slate-600';
+                soundIcon.className = 'fa-solid fa-volume-high text-base md:text-lg text-slate-600';
                 playSound('click');
             }
         }
