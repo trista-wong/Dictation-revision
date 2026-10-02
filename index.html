@@ -80,17 +80,9 @@
                 </div>
             </div>
 
-            <!-- Second Line on Mobile / Right Side on Desktop: Scope Selector & Desktop Utilities -->
-            <div class="flex items-center justify-between w-full sm:w-auto space-x-2 pt-1.5 sm:pt-0 border-t sm:border-t-0 border-slate-100">
-                <!-- Dictation Selector Dropdown -->
-                <div class="relative flex-1 sm:flex-none flex items-center space-x-1.5">
-                    <span class="text-xs font-bold text-indigo-500 whitespace-nowrap"><i class="fa-solid fa-book-bookmark mr-1"></i>Scope:</span>
-                    <select id="headerDictationSelect" onchange="changeDictation(this.value)" class="w-full sm:w-auto bg-indigo-50 border border-indigo-200 text-indigo-700 font-bold text-xs md:text-sm rounded-xl px-3 py-1.5 outline-none cursor-pointer hover:bg-indigo-100 transition">
-                        <!-- Dynamic Options -->
-                    </select>
-                </div>
-
-                <!-- Desktop-only Utility Controls -->
+            <!-- Right Side on Desktop: Utility Controls -->
+            <div class="flex items-center justify-end w-full sm:w-auto space-x-2 pt-1.5 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+                <!-- Desktop Utility Controls -->
                 <div class="hidden sm:flex items-center space-x-2">
                     <!-- Stars Counter -->
                     <div class="flex items-center bg-amber-100 border border-amber-300 px-2.5 py-1 md:px-3 md:py-1.5 rounded-full">
@@ -118,17 +110,9 @@
         <!-- Main Menu Screen -->
         <div id="menuScreen" class="space-y-6 max-w-2xl mx-auto w-full py-4">
             <div class="text-center space-y-2">
-                <span class="bg-indigo-100 text-indigo-700 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Dictation Revision Game</span>
-                <h2 id="dictationTitleDisplay" class="font-game text-3xl md:text-4xl text-slate-800">Dictation 1</h2>
-                <p id="dictationSubtitleDisplay" class="text-slate-500 font-medium">Master vocabulary & sentence practice</p>
-            </div>
-
-            <!-- Dictation Selection Bar -->
-            <div class="bg-white rounded-2xl p-4 border border-slate-200 space-y-2">
-                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider">Select Dictation Scope (選擇默書範圍)</label>
-                <div id="dictationTabs" class="flex flex-wrap gap-2">
-                    <!-- Dynamic tabs rendered here -->
-                </div>
+                <span class="bg-indigo-100 text-indigo-700 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Game Selection</span>
+                <h2 id="dictationTitleDisplay" class="font-game text-3xl md:text-4xl text-slate-800">Select Game Mode</h2>
+                <p id="dictationSubtitleDisplay" class="text-slate-500 font-medium">Part A Spelling • Part B Sentences • Flashcards Review</p>
             </div>
 
             <!-- Mode Buttons -->
@@ -259,7 +243,7 @@
                             Standard
                         </button>
                         <button id="modeBtnAdvanced" onclick="setFillSubMode('advanced')" class="px-3 py-1 rounded-xl text-xs font-bold transition text-slate-600 hover:text-purple-600">
-                            🚀 Advanced (全句)
+                            🚀 Advanced (Full Sentence)
                         </button>
                     </div>
 
@@ -435,75 +419,47 @@
             return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
         }
 
-        // --- Multi-Dictation Database ---
-        const DICTATIONS = [
-            {
-                id: 1,
-                name: "默書 (一) Dictation 1",
-                title: "Dictation 1 Scope",
-                subtitle: "Part A Vocabulary & Part B Sentences",
-                words: [
-                    { id: 1, word: "father", category: "Family Member", icon: "👨" },
-                    { id: 2, word: "mother", category: "Family Member", icon: "👩" },
-                    { id: 3, word: "brother", category: "Family Member", icon: "👦" },
-                    { id: 4, word: "sister", category: "Family Member", icon: "👧" },
-                    { id: 5, word: "five", category: "Number", icon: "5️⃣" },
-                    { id: 6, word: "seven", category: "Number", icon: "7️⃣" },
-                    { id: 7, word: "a friend", category: "Person", icon: "🧑‍🤝‍🧑" },
-                    { id: 8, word: "a group leader", category: "Role", icon: "🧑‍💼" },
-                    { id: 9, word: "a classmate", category: "Person", icon: "🎒" },
-                    { id: 10, word: "a classroom", category: "Place", icon: "🏫" },
-                    { id: 11, word: "a school", category: "Place", icon: "🏢" },
-                    { id: 12, word: "this", category: "Pronoun", icon: "👉" }
-                ],
-                sentences: [
-                    { id: 1, context: "Dictation Sentence 1", displayParts: ["Mandy and I are ", "."], answer: "twins", fullText: "Mandy and I are twins.", icon: "👯‍♀" },
-                    { id: 2, context: "Dictation Sentence 2", displayParts: ["We are ", " years old."], answer: "seven", fullText: "We are seven years old.", icon: "7️⃣" },
-                    { id: 3, context: "Dictation Sentence 3", displayParts: ["We are seven ", " old."], answer: "years", fullText: "We are seven years old.", icon: "🎂" },
-                    { id: 4, context: "Dictation Sentence 4", displayParts: ["How ", " are you, Emily?"], answer: "old", fullText: "How old are you, Emily?", icon: "❓" },
-                    { id: 5, context: "Dictation Sentence 5", displayParts: ["How old are you, ", "?"], answer: "Emily", fullText: "How old are you, Emily?", icon: "👧" },
-                    { id: 6, context: "Dictation Sentence 6", displayParts: ["I am ", " years old."], answer: "six", fullText: "I am six years old.", icon: "6️⃣" },
-                    { id: 7, context: "Dictation Sentence 7", displayParts: ["I am six ", " old."], answer: "years", fullText: "I am six years old.", icon: "🎂" },
-                    { id: 8, context: "Dictation Sentence 8", displayParts: ["", " is a cookie for you."], answer: "Here", fullText: "Here is a cookie for you.", icon: "🍪" },
-                    { id: 9, context: "Dictation Sentence 9", displayParts: ["Here is a ", " for you."], answer: "cookie", fullText: "Here is a cookie for you.", icon: "🍪" },
-                    { id: 10, context: "Dictation Sentence 10", displayParts: ["Here is a cookie for ", "."], answer: "you", fullText: "Here is a cookie for you.", icon: "👉" },
-                    { id: 11, context: "Dictation Sentence 11", displayParts: ["", " you."], answer: "Thank", fullText: "Thank you.", icon: "🙏" },
-                    { id: 12, context: "Dictation Sentence 12", displayParts: ["Thank ", "."], answer: "you", fullText: "Thank you.", icon: "😊" }
-                ]
-            },
-            {
-                id: 2,
-                name: "默書 (二) Dictation 2 (Sample)",
-                title: "Dictation 2 Scope",
-                subtitle: "Part A School Objects & Part B Requests",
-                words: [
-                    { id: 1, word: "pencil", category: "Stationery", icon: "✏" },
-                    { id: 2, word: "ruler", category: "Stationery", icon: "📏" },
-                    { id: 3, word: "eraser", category: "Stationery", icon: "🧹" },
-                    { id: 4, word: "schoolbag", category: "Object", icon: "🎒" },
-                    { id: 5, word: "teacher", category: "Person", icon: "👩‍🏫" },
-                    { id: 6, word: "student", category: "Person", icon: "🧑‍🎓" }
-                ],
-                sentences: [
-                    { id: 1, context: "Polite Request", displayParts: ["May I have a ", " please?"], answer: "ruler", fullText: "May I have a ruler please?", icon: "📏" },
-                    { id: 2, context: "Polite Request Reply", displayParts: ["Here you ", "."], answer: "are", fullText: "Here you are.", icon: "🎁" }
-                ]
-            }
-        ];
-
-        // --- Active Dictation State ---
-        let currentDictationId = 1;
-
-        function getActiveDictation() {
-            return DICTATIONS.find(d => d.id == currentDictationId) || DICTATIONS[0];
-        }
+        // --- Dictation Database (Single Dictation Scope) ---
+        const DICTATION_DATA = {
+            id: 1,
+            title: "Select Game Mode",
+            subtitle: "Part A Spelling • Part B Sentences • Flashcards Review",
+            words: [
+                { id: 1, word: "father", category: "Family Member", icon: "👨" },
+                { id: 2, word: "mother", category: "Family Member", icon: "👩" },
+                { id: 3, word: "brother", category: "Family Member", icon: "👦" },
+                { id: 4, word: "sister", category: "Family Member", icon: "👧" },
+                { id: 5, word: "five", category: "Number", icon: "5️⃣" },
+                { id: 6, word: "seven", category: "Number", icon: "7️⃣" },
+                { id: 7, word: "a friend", category: "Person", icon: "🧑‍🤝‍🧑" },
+                { id: 8, word: "a group leader", category: "Role", icon: "🧑‍💼" },
+                { id: 9, word: "a classmate", category: "Person", icon: "🎒" },
+                { id: 10, word: "a classroom", category: "Place", icon: "🏫" },
+                { id: 11, word: "a school", category: "Place", icon: "🏢" },
+                { id: 12, word: "this", category: "Pronoun", icon: "👉" }
+            ],
+            sentences: [
+                { id: 1, context: "Dictation Sentence 1", displayParts: ["Mandy and I are ", "."], answer: "twins", fullText: "Mandy and I are twins.", icon: "👯‍♀" },
+                { id: 2, context: "Dictation Sentence 2", displayParts: ["We are ", " years old."], answer: "seven", fullText: "We are seven years old.", icon: "7️⃣" },
+                { id: 3, context: "Dictation Sentence 3", displayParts: ["We are seven ", " old."], answer: "years", fullText: "We are seven years old.", icon: "🎂" },
+                { id: 4, context: "Dictation Sentence 4", displayParts: ["How ", " are you, Emily?"], answer: "old", fullText: "How old are you, Emily?", icon: "❓" },
+                { id: 5, context: "Dictation Sentence 5", displayParts: ["How old are you, ", "?"], answer: "Emily", fullText: "How old are you, Emily?", icon: "👧" },
+                { id: 6, context: "Dictation Sentence 6", displayParts: ["I am ", " years old."], answer: "six", fullText: "I am six years old.", icon: "6️⃣" },
+                { id: 7, context: "Dictation Sentence 7", displayParts: ["I am six ", " old."], answer: "years", fullText: "I am six years old.", icon: "🎂" },
+                { id: 8, context: "Dictation Sentence 8", displayParts: ["", " is a cookie for you."], answer: "Here", fullText: "Here is a cookie for you.", icon: "🍪" },
+                { id: 9, context: "Dictation Sentence 9", displayParts: ["Here is a ", " for you."], answer: "cookie", fullText: "Here is a cookie for you.", icon: "🍪" },
+                { id: 10, context: "Dictation Sentence 10", displayParts: ["Here is a cookie for ", "."], answer: "you", fullText: "Here is a cookie for you.", icon: "👉" },
+                { id: 11, context: "Dictation Sentence 11", displayParts: ["", " you."], answer: "Thank", fullText: "Thank you.", icon: "🙏" },
+                { id: 12, context: "Dictation Sentence 12", displayParts: ["Thank ", "."], answer: "you", fullText: "Thank you.", icon: "😊" }
+            ]
+        };
 
         function getActiveWords() {
-            return getActiveDictation().words;
+            return DICTATION_DATA.words;
         }
 
         function getActiveSentences() {
-            return getActiveDictation().sentences;
+            return DICTATION_DATA.sentences;
         }
 
         // --- App State ---
@@ -531,37 +487,12 @@
         let fillSubMode = 'standard'; // 'standard' (fill blank) or 'advanced' (full sentence)
         let isUppercasePartB = false;
 
-        function changeDictation(id) {
-            playSound('click');
-            currentDictationId = parseInt(id);
-            renderDictationUI();
-        }
-
         function renderDictationUI() {
-            const active = getActiveDictation();
+            document.getElementById('dictationTitleDisplay').innerText = DICTATION_DATA.title;
+            document.getElementById('dictationSubtitleDisplay').innerText = DICTATION_DATA.subtitle;
 
-            document.getElementById('dictationTitleDisplay').innerText = active.title;
-            document.getElementById('dictationSubtitleDisplay').innerText = active.subtitle;
-
-            const headerSelect = document.getElementById('headerDictationSelect');
-            headerSelect.innerHTML = DICTATIONS.map(d => 
-                `<option value="${d.id}" ${d.id === currentDictationId ? 'selected' : ''}>${d.name}</option>`
-            ).join('');
-
-            const tabsContainer = document.getElementById('dictationTabs');
-            tabsContainer.innerHTML = DICTATIONS.map(d => `
-                <button onclick="changeDictation(${d.id})" class="pop-btn px-4 py-2 rounded-xl text-xs md:text-sm font-bold transition flex items-center space-x-1.5 ${
-                    d.id === currentDictationId 
-                        ? 'bg-indigo-600 text-white shadow-md' 
-                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                }">
-                    <i class="fa-solid ${d.id === currentDictationId ? 'fa-circle-check' : 'fa-circle'} text-xs"></i>
-                    <span>${d.name}</span>
-                </button>
-            `).join('');
-
-            document.getElementById('partAWordCount').innerText = active.words.length;
-            document.getElementById('completionBadge').innerText = `Mastered 0/${active.words.length}`;
+            document.getElementById('partAWordCount').innerText = DICTATION_DATA.words.length;
+            document.getElementById('completionBadge').innerText = `Mastered 0/${DICTATION_DATA.words.length}`;
             renderWordPillList();
         }
 
